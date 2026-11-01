@@ -1,0 +1,23 @@
+# Streamlit
+.agents/skills/developing-with-streamlit
+.claude/skills/developing-with-streamlit
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# Raw downloads (re-created by get_weather.py)
+data/raw/
+
+# Secrets and local settings
+.env
+.streamlit/secrets.toml
+.claude/settings.local.json
+
+# OS and editors
+.DS_Store
+.vscode/
+.idea/
