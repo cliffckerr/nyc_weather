@@ -2,11 +2,25 @@
 
 A Streamlit dashboard of daily weather in New York City (Central Park) from 1975 onward, with tabs for daylight, temperature, precipitation, and explorations.
 
+## Screenshots
+
+**Daylight:** sunrise to sunset in local clock time, with daylight saving changes, equinoxes, and solstices marked.
+
+![Daylight tab, showing sunrise to sunset for each day of 2025](assets/daylight.png)
+
+**Temperature:** average daily minimum and maximum through the year, shown here in the radial view.
+
+![Temperature tab, showing average daily minimum and maximum on a radial chart](assets/temperature.png)
+
+**Precipitation:** share of years with rain or snow on each day of the year.
+
+![Precipitation tab, showing a heatmap of the share of years with rainfall on each calendar day](assets/precipitation.png)
+
 ## Usage
 
 ```bash
 pip install -r requirements.txt
-streamlit run app.py
+streamlit run
 ```
 
 The merged data is in the repo, so the dashboard works straight away.
