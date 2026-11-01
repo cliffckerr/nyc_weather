@@ -31,7 +31,11 @@ The merged data is in the repo, so the dashboard works straight away.
 python get_weather.py
 ```
 
-This writes `data/nyc_weather.csv` and `data/nyc_weather_metric.csv`, the latter being what the dashboard reads. Raw downloads go in `data/raw/`, which isn't tracked, and are reused if present, so delete them to get newer data.
+This writes `data/nyc_weather.csv` and `data/nyc_weather_metric.csv`, the latter being what the dashboard reads, as well as `docs/weather.csv` for the static site. Raw downloads go in `data/raw/`, which isn't tracked, and are reused if present, so delete them to get newer data.
+
+## Static site
+
+`docs/` is a Plotly.js translation of the dashboard for GitHub Pages, with no build step: set Pages to serve `/docs` from `main`. To preview it, run `python -m http.server --directory docs`. It's a separate implementation, so a change to `streamlit_app.py` needs making in `docs/figures.js` too. To check that the two still match, run `python docs/compare_figures.py`, which needs Node.
 
 ## Data sources
 

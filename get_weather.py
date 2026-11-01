@@ -2,7 +2,8 @@
 Download daily NYC (Central Park) weather and merge it into a single CSV.
 
 Raw downloads go in data/raw/ and are reused if present; delete them to refresh.
-The merged result is data/nyc_weather.csv.
+The merged result is data/nyc_weather.csv, with a metric version in data/nyc_weather_metric.csv
+and the columns the static site uses in docs/weather.csv.
 
 Sources:
     station_* columns: NOAA GHCN-Daily, Central Park station USW00094728 (measured)
@@ -23,6 +24,8 @@ lat, lon = 40.7789, -73.9692  # Central Park
 data_dir = Path(__file__).parent / 'data'
 raw_dir = data_dir / 'raw'
 noaa_file = raw_dir / 'ghcn_USW00094728.csv'
+docs_file = Path(__file__).parent / 'docs' / 'weather.csv'  # The static site can't reach data/, so it gets its own copy of the columns it uses
+docs_columns = ['tmin_c', 'tmax_c', 'precip_mm', 'snow_cm', 'sunrise', 'sunset', 'daylight_hours']
 noaa_url = 'https://www.ncei.noaa.gov/data/global-historical-climatology-network-daily/access/USW00094728.csv'
 era5_url = 'https://archive-api.open-meteo.com/v1/archive'
 era5_vars = [
@@ -137,7 +140,9 @@ def main():
     era5 = load_era5()
     df = finalize(noaa.round(1).join(era5, how='outer'))
     df.to_csv(data_dir / 'nyc_weather.csv')
-    finalize(make_metric(noaa, era5)).to_csv(data_dir / 'nyc_weather_metric.csv')
+    metric = finalize(make_metric(noaa, era5))
+    metric.to_csv(data_dir / 'nyc_weather_metric.csv')
+    metric[docs_columns].to_csv(docs_file)
     print(f'Wrote {len(df)} days, {df.index[0].date()} to {df.index[-1].date()}')
     print(df.notna().mean().round(3).to_string())
 

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NYC weather</title>
+    <meta name="description" content="Daily weather in New York City (Central Park) from 1975 onward: daylight, temperature, and precipitation.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@3.1.0/plotly.min.js" defer></script>
+    <script src="figures.js" defer></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+<main>
+    <h1>NYC weather</h1>
+    <div class="years">
+        <label>Start year <input type="number" id="start-year" step="1"></label>
+        <label>Stop year <input type="number" id="stop-year" step="1"></label>
+    </div>
+    <p class="error" id="year-error" role="alert" hidden>Start year must not be after stop year.</p>
+
+    <div class="tabs" role="tablist" aria-label="Charts">
+        <button role="tab" id="daylight-tab" data-tab="daylight" aria-controls="daylight-panel" aria-selected="true">Daylight</button>
+        <button role="tab" id="temperature-tab" data-tab="temperature" aria-controls="temperature-panel" aria-selected="false">Temperature</button>
+        <button role="tab" id="precipitation-tab" data-tab="precipitation" aria-controls="precipitation-panel" aria-selected="false">Precipitation</button>
+        <button role="tab" id="explorations-tab" data-tab="explorations" aria-controls="explorations-panel" aria-selected="false">Explorations</button>
+    </div>
+    <p id="loading">Loading…</p>
+
+    <section role="tabpanel" id="daylight-panel" aria-labelledby="daylight-tab">
+        <div class="panel-body">
+            <p class="caption" id="daylight-caption"></p>
+            <div class="controls">
+                <label class="toggle"><input type="checkbox" id="daylight-radial"><span></span>Radial</label>
+            </div>
+            <div id="daylight-plot"></div>
+        </div>
+    </section>
+
+    <section role="tabpanel" id="temperature-panel" aria-labelledby="temperature-tab" hidden>
+        <div class="panel-body">
+            <div class="controls">
+                <label class="toggle"><input type="checkbox" id="individual-years"><span></span>Show individual years</label>
+                <label class="toggle"><input type="checkbox" id="temperature-radial"><span></span>Radial</label>
+            </div>
+            <div id="temperature-plot"></div>
+            <div class="box">
+                <div id="periods"></div>
+                <p class="caption">Temperature is the mean of daily min and max. Dated periods are the most extreme consecutive days within the selected years.</p>
+            </div>
+        </div>
+    </section>
+
+    <section role="tabpanel" id="precipitation-panel" aria-labelledby="precipitation-tab" hidden>
+        <div class="panel-body">
+            <div class="controls">
+                <div class="segments" role="radiogroup" aria-label="Precipitation type">
+                    <label><input type="radio" name="precipitation-kind" value="Rainfall" checked><span>Rainfall</span></label>
+                    <label><input type="radio" name="precipitation-kind" value="Snowfall"><span>Snowfall</span></label>
+                </div>
+                <label class="toggle"><input type="checkbox" id="as-graphs"><span></span>As graphs</label>
+            </div>
+            <div id="precipitation-plot"></div>
+            <p class="caption">Share of the selected years with any rain or snow recorded on that day; trace amounts are not counted, and a day with both counts as snowfall. Feb 29 uses leap years only.</p>
+        </div>
+    </section>
+
+    <section role="tabpanel" id="explorations-panel" aria-labelledby="explorations-tab" hidden>
+        <div class="panel-body">
+            <div id="explorations-plot"></div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
